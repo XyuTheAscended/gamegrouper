@@ -60,7 +60,7 @@ function Genres() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src="/images/gamepad.png" alt="Gamepad" />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
           </div>
         </aside>
 
@@ -76,47 +76,47 @@ function Genres() {
           <section id="genresGrid">
 
             <Link to="/browse?tag=roguelike" className="genreBox">
-              <img src="/images/roguelineage.png" alt="Roguelike" />
+              <img src={`${process.env.PUBLIC_URL}/images/roguelineage.png`} />
               <h3>ROGUELIKE</h3>
             </Link>
 
             <Link to="/browse?tag=indie" className="genreBox">
-              <img src="/images/hollowknight.png" alt="Indie" />
+              <img src={`${process.env.PUBLIC_URL}/images/hollowknight.png`} />
               <h3>INDIE</h3>
             </Link>
 
             <Link to="/browse?tag=horror" className="genreBox">
-              <img src="/images/Horror.png" alt="Horror" />
+              <img src={`${process.env.PUBLIC_URL}/images/Horror.png`} />
               <h3>HORROR</h3>
             </Link>
 
             <Link to="/browse?tag=multiplayer" className="genreBox">
-              <img src="/images/fortnite.png" alt="Multiplayer" />
+              <img src={`${process.env.PUBLIC_URL}/images/fortnite.png`} />
               <h3>MULTIPLAYER</h3>
             </Link>
 
             <Link to="/browse?tag=singleplayer" className="genreBox">
-              <img src="/images/godofwar.png" alt="Singleplayer" />
+              <img src={`${process.env.PUBLIC_URL}/images/godofwar.png`} />
               <h3>SINGLEPLAYER</h3>
             </Link>
 
             <Link to="/browse?tag=fps" className="genreBox">
-              <img src="/images/codmw.png" alt="FPS" />
+              <img src={`${process.env.PUBLIC_URL}/images/codmw.png`} />
               <h3>FPS</h3>
             </Link>
 
             <Link to="/browse?tag=rpg" className="genreBox">
-              <img src="/images/minecraft.png" alt="RPG" />
+              <img src={`${process.env.PUBLIC_URL}/images/minecraft.png`} />
               <h3>RPG</h3>
             </Link>
 
             <Link to="/browse?tag=3d" className="genreBox">
-              <img src="/images/3D.png" alt="3D" />
+              <img src={`${process.env.PUBLIC_URL}/images/3D.png`} />
               <h3>3D</h3>
             </Link>
 
             <Link to="/browse?tag=2d" className="genreBox">
-              <img src="/images/mario.png" alt="2D" />
+              <img src={`${process.env.PUBLIC_URL}/images/mario.png`} />
               <h3>2D</h3>
             </Link>
 

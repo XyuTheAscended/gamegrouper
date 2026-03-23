@@ -15,7 +15,7 @@ function Browse() {
 
   // FETCH JSON
   useEffect(() => {
-    fetch("/data/games.json")
+    fetch(process.env.PUBLIC_URL + "/data/games.json")
       .then(res => res.json())
       .then(data => {
         setGames(data.games);
@@ -85,7 +85,7 @@ function Browse() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src="/images/gamepad.png" alt="Gamepad" />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
           </div>
         </aside>
 

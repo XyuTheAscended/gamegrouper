@@ -8,7 +8,7 @@ function Deals() {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch("/data/games.json")
+    fetch(process.env.PUBLIC_URL + "/data/games.json")
       .then(res => res.json())
       .then(data => setGames(data.games))
       .catch(err => console.error("JSON ERROR:", err));
@@ -77,7 +77,7 @@ function Deals() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src="/images/gamepad.png" alt="Gamepad" />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
           </div>
         </aside>
 
@@ -94,7 +94,7 @@ function Deals() {
             {freeGames.map(game => (
               <div className="dealBox" key={game.title}>
                 <a href={game.link} target="_blank" rel="noreferrer">
-                  <img src={`/images/${game.image}`} alt={game.title} />
+                  <img src={`${process.env.PUBLIC_URL}/images/${game.image}`} />
                 </a>
                 <h3>{game.title}</h3>
                 <p>FREE</p>
@@ -108,7 +108,7 @@ function Deals() {
             {fiveDollarGames.map(game => (
               <div className="dealBox" key={game.title}>
                 <a href={game.link} target="_blank" rel="noreferrer">
-                  <img src={`/images/${game.image}`} alt={game.title} />
+                  <img src={`${process.env.PUBLIC_URL}/images/${game.image}`} />
                 </a>
                 <h3>{game.title}</h3>
                 <p>$5 or Less</p>
@@ -122,7 +122,7 @@ function Deals() {
             {fifteenDollarGames.map(game => (
               <div className="dealBox" key={game.title}>
                 <a href={game.link} target="_blank" rel="noreferrer">
-                  <img src={`/images/${game.image}`} alt={game.title} />
+                  <img src={`${process.env.PUBLIC_URL}/images/${game.image}`} />
                 </a>
                 <h3>{game.title}</h3>
                 <p>$15 or Less</p>

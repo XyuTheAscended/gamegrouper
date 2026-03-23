@@ -47,7 +47,7 @@ function About() {
 
             <div className="about-box">
               <h3>My Mission</h3>
-              <img src="/images/gamer.png" className="gamer" alt="Mission" />
+              <img src={`${process.env.PUBLIC_URL}/images/gamer.png`} />
               <p>
                 My mission for this website is to ensure that the user is pleased
                 with the products and material on the website for videogames. If
@@ -57,7 +57,7 @@ function About() {
 
             <div className="about-box">
               <h3>What I Offer</h3>
-              <img src="/images/gamer2.png" className="gamer" alt="Offer" />
+              <img src={`${process.env.PUBLIC_URL}/images/gamer2.png`} />
               <p>
                 I offer many games ranging from different categories that I know
                 people would enjoy. I hope the joy I have in games can bring joy
@@ -67,7 +67,7 @@ function About() {
 
             <div className="about-box">
               <h3>My Community</h3>
-              <img src="/images/gamer3.png" className="gamer" alt="Community" />
+              <img src={`${process.env.PUBLIC_URL}/images/gamer3.png`} />
               <p>
                 Join my community and make sure you tune in to the latest news on
                 my website for updates on new games or even sales!

@@ -86,7 +86,7 @@ function Devlogs() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src="/images/gamepad.png" alt="Gamepad" />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
           </div>
         </aside>
 

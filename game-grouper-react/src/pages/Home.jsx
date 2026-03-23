@@ -9,7 +9,7 @@ function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/data/games.json")
+    fetch(process.env.PUBLIC_URL + "/data/games.json")
       .then((res) => res.json())
       .then((data) => {
         const featured = ["Among Us", "God of War", "Rogue Lineage"];
@@ -66,7 +66,7 @@ function Home() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src="/images/gamepad.png" alt="Gamepad" />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
           </div>
         </aside>
 
