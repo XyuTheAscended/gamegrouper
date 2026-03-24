@@ -86,7 +86,7 @@ function About() {
               {/* FORM */}
               <form
                 id="contactForm"
-                action="https://formsubmit.co/youractualemail@gmail.com"
+                action="https://formsubmit.co/tyler.christian.norman@gmail.com"
                 method="POST"
               >
 
