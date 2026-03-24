@@ -93,7 +93,7 @@ function Home() {
             <Link id="viewAllBtn" to="/browse">View All &gt;&gt;&gt;</Link>
           </div>
 
-          {/* 🔥 GAME GRID */}
+          {/* GAME GRID */}
           <section id="gameslayout">
             {games.map((game, index) => (
               <GameCard
