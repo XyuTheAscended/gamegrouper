@@ -125,7 +125,7 @@ function Home() {
             <Link id="viewAllBtn" to="/browse">View All &gt;&gt;&gt;</Link>
           </div>
 
-          {/* GAME SLIDER */}
+          {/* 🔥 3 GAME SLIDER */}
           <section id="gameslider">
 
             {/* LEFT */}

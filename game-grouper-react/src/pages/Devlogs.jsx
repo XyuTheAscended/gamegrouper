@@ -7,7 +7,6 @@ function Devlogs() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-
  const devlogs = [
   {
     title: "Minecraft 1.21 Update",

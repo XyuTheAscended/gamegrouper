@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "../styles/genres.css"; 
+import "../styles/genres.css";
 
 function Genres() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
