@@ -1,7 +1,34 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import "../styles/about.css";
 
 function About() {
+  const [status, setStatus] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    setStatus("Sending...");
+
+    try {
+      await fetch(
+        "https://formsubmit.co/ajax/tyler.christian.norman@gmail.com",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      setStatus("Message sent successfully!");
+      form.reset();
+    } catch (error) {
+      setStatus("Error sending message.");
+    }
+  };
+
   return (
     <div id="website">
 
@@ -47,30 +74,27 @@ function About() {
 
             <div className="about-box">
               <h3>My Mission</h3>
-              <img src={`${process.env.PUBLIC_URL}/images/gamer.png`} />
+              <img src={`${process.env.PUBLIC_URL}/images/gamer.png`} alt="Mission" />
               <p>
                 My mission for this website is to ensure that the user is pleased
-                with the products and material on the website for videogames. If
-                the mission is not met then it is not complete.
+                with the products and material on the website for videogames.
               </p>
             </div>
 
             <div className="about-box">
               <h3>What I Offer</h3>
-              <img src={`${process.env.PUBLIC_URL}/images/gamer2.png`} />
+              <img src={`${process.env.PUBLIC_URL}/images/gamer2.png`} alt="Offer" />
               <p>
                 I offer many games ranging from different categories that I know
-                people would enjoy. I hope the joy I have in games can bring joy
-                to the user!
+                people would enjoy.
               </p>
             </div>
 
             <div className="about-box">
               <h3>My Community</h3>
-              <img src={`${process.env.PUBLIC_URL}/images/gamer3.png`} />
+              <img src={`${process.env.PUBLIC_URL}/images/gamer3.png`} alt="Community" />
               <p>
-                Join my community and make sure you tune in to the latest news on
-                my website for updates on new games or even sales!
+                Join my community and stay updated on new games and sales!
               </p>
             </div>
 
@@ -84,11 +108,7 @@ function About() {
             <div className="contact-container">
 
               {/* FORM */}
-              <form
-                id="contactForm"
-                action="https://formsubmit.co/youractualemail@gmail.com"
-                method="POST"
-              >
+              <form id="contactForm" onSubmit={handleSubmit}>
 
                 <input type="text" name="name" placeholder="Your Name" required />
 
@@ -96,15 +116,12 @@ function About() {
 
                 <textarea name="message" placeholder="Your Message" required />
 
-                <button type="submit">Send Message</button>
-
+                {/* REQUIRED HIDDEN FIELDS */}
                 <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_subject" value="New Game Grouper Message" />
 
-                <input
-                  type="hidden"
-                  name="_next"
-                  value="http://localhost:3000/about"
-                />
+                <button type="submit">Send Message</button>
 
               </form>
 
@@ -112,9 +129,12 @@ function About() {
               <div className="contact-side">
                 <h3>Get In Touch</h3>
                 <p>
-                  If you have any questions, feedback, or game suggestions, feel
-                  free to reach out! I’m always looking to improve Game Grouper.
+                  If you have any questions, feedback, or game suggestions,
+                  feel free to reach out!
                 </p>
+
+                {/* 🔥 STATUS MESSAGE */}
+                {status && <p className="status">{status}</p>}
               </div>
 
             </div>

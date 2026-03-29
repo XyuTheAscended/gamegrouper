@@ -417,6 +417,57 @@ a{
   border-radius: 12px;
 }
 
+#gameslider {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  align-items: center;
+  width: 100%;
+  margin-top: 12px;
+  gap: 10px;
+}
+
+.slider-games {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+
+.slider-games > * {
+  width: 100%;
+  max-width: none;
+}
+
+.slider-arrow {
+  background: none;
+  border: none;
+  color: gold;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  justify-self: center;
+}
+
+.slider-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1000px) {
+  .slider-games {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  #gameslider {
+    grid-template-columns: 40px 1fr 40px;
+  }
+
+  .slider-games {
+    grid-template-columns: 1fr;
+  }
+}
 /*mobile*/
 @media (max-width:768px){
   #authPage{

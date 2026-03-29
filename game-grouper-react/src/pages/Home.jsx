@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import GameCard from "../components/GameCard";
 import "../styles/home.css";
+import BrowseCard from "../components/BrowseCard";
 
 function Home() {
-  const [games, setGames] = useState([]);
+  const [allGames, setAllGames] = useState([]);
+  const [gameGroups, setGameGroups] = useState([]);
+  const [groupIndex, setGroupIndex] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -12,15 +14,42 @@ function Home() {
     fetch(process.env.PUBLIC_URL + "/data/games.json")
       .then((res) => res.json())
       .then((data) => {
+        const gamesData = data.games || [];
+        setAllGames(gamesData);
+
         const featured = ["Among Us", "God of War", "Rogue Lineage"];
 
-        const filtered = data.games.filter((game) =>
+        const firstGroup = gamesData.filter((game) =>
           featured.includes(game.title)
         );
 
-        setGames(filtered);
+        setGameGroups([firstGroup]);
       });
   }, []);
+
+  const getRandomGroup = () => {
+    if (allGames.length <= 3) return allGames;
+
+    const shuffled = [...allGames].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 3);
+  };
+
+  const nextGroup = () => {
+    if (groupIndex < gameGroups.length - 1) {
+      setGroupIndex(groupIndex + 1);
+      return;
+    }
+
+    const newGroup = getRandomGroup();
+    setGameGroups((prev) => [...prev, newGroup]);
+    setGroupIndex((prev) => prev + 1);
+  };
+
+  const prevGroup = () => {
+    if (groupIndex > 0) {
+      setGroupIndex((prev) => prev - 1);
+    }
+  };
 
   return (
     <div id="website">
@@ -42,19 +71,22 @@ function Home() {
         </nav>
       </header>
 
+      {/* SIDEBAR TOGGLES */}
       <button id="desktopArrow" onClick={() => setSidebarOpen(!sidebarOpen)}>
-  {sidebarOpen ? "◄" : "►"}
-</button>
+        {sidebarOpen ? "◄" : "►"}
+      </button>
 
-<button id="sidebarToggle" onClick={() => setMobileOpen(!mobileOpen)}>
-  {mobileOpen ? "▲ Menu" : "▼ Menu"}
-</button>
+      <button id="sidebarToggle" onClick={() => setMobileOpen(!mobileOpen)}>
+        {mobileOpen ? "▲ Menu" : "▼ Menu"}
+      </button>
 
       <div id="pagelayout">
 
         {/* SIDEBAR */}
-        <aside  id="sidebar"
-  className={`${!sidebarOpen ? "closed" : ""} ${mobileOpen ? "show" : ""}`}>
+        <aside
+          id="sidebar"
+          className={`${!sidebarOpen ? "closed" : ""} ${mobileOpen ? "show" : ""}`}
+        >
           <h2>POPULAR TAGS</h2>
           <ul>
             <li><Link to="/browse">Horror games</Link></li>
@@ -66,7 +98,7 @@ function Home() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} alt="Gamepad" />
           </div>
         </aside>
 
@@ -87,22 +119,43 @@ function Home() {
             ></iframe>
           </div>
 
-          {/* FEATURED */}
+          {/* FEATURED TITLE */}
           <div id="featuredtitle">
             <h2>Latest Featured Games</h2>
             <Link id="viewAllBtn" to="/browse">View All &gt;&gt;&gt;</Link>
           </div>
 
-          {/* 🔥 GAME GRID */}
-          <section id="gameslayout">
-            {games.map((game, index) => (
-              <GameCard
-                key={index}
-                title={game.title}
-                image={game.image}
-                description={game.description}
-              />
-            ))}
+          {/* GAME SLIDER */}
+          <section id="gameslider">
+
+            {/* LEFT */}
+            <button
+              className="slider-arrow left"
+              onClick={prevGroup}
+              disabled={groupIndex === 0}
+            >
+              ◄
+            </button>
+
+            {/* GAMES */}
+            <div className="slider-games">
+              {gameGroups[groupIndex] &&
+                gameGroups[groupIndex].map((game, index) => (
+                  <BrowseCard
+                    key={`${groupIndex}-${index}-${game.title}`}
+                    game={game}
+                  />
+                ))}
+            </div>
+
+            {/* RIGHT */}
+            <button
+              className="slider-arrow right"
+              onClick={nextGroup}
+            >
+              ►
+            </button>
+
           </section>
 
         </main>
