@@ -155,7 +155,7 @@ a {
   margin-bottom: 10px;
 }
 
-/* ===== CONTACT SECTION ===== */
+/* CONTACT SECTION */
 #contactSection {
   margin-top: 40px;
   text-align: center;
@@ -219,7 +219,7 @@ a {
   color: var(--muted);
 }
 
-/* ===== MOBILE ===== */
+/* MOBILE*/
 @media (max-width: 768px) {
 
   #pagelayout {

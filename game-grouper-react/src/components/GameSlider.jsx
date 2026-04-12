@@ -8,15 +8,20 @@ function GameSlider() {
   const [animate, setAnimate] = useState("");
 
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + "/data/games.json")
-      .then((res) => res.json())
+    fetch("http://localhost:3001/api/games")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch games");
+        }
+        return res.json();
+      })
       .then((data) => {
-        setGames(data.games);
+        setGames(data);
 
-        // start with a random game
-        const first = data.games[Math.floor(Math.random() * data.games.length)];
-        setHistory([first]);
-      });
+        const first = data[Math.floor(Math.random() * data.length)];
+        setHistory(first ? [first] : []);
+      })
+      .catch((err) => console.error("FETCH ERROR:", err));
   }, []);
 
   const nextGame = () => {
@@ -49,8 +54,6 @@ function GameSlider() {
 
   return (
     <div className="slider-container">
-
-      {/* LEFT ARROW */}
       <button
         className="arrow left"
         onClick={prevGame}
@@ -59,17 +62,18 @@ function GameSlider() {
         ◀
       </button>
 
-      {/* GAME DISPLAY */}
       <div className={`game-card ${animate}`}>
         {currentGame && (
           <>
-            <img src={currentGame.image} alt={currentGame.title} />
+            <img
+              src={`${process.env.PUBLIC_URL}/images/${currentGame.image}`}
+              alt={currentGame.title}
+            />
             <h2>{currentGame.title}</h2>
           </>
         )}
       </div>
 
-      {/* RIGHT ARROW */}
       <button className="arrow right" onClick={nextGame}>
         ▶
       </button>

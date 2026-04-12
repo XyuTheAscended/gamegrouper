@@ -8,32 +8,31 @@ function Deals() {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + "/data/games.json")
-      .then(res => res.json())
-      .then(data => setGames(data.games))
-      .catch(err => console.error("JSON ERROR:", err));
+    fetch("http://localhost:3001/api/games")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch games");
+        }
+        return res.json();
+      })
+      .then((data) => setGames(data))
+      .catch((err) => console.error("FETCH ERROR:", err));
   }, []);
 
-  // FILTERS
-  const freeGames = games.filter(g =>
-    ["Minecraft", "Among Us", "Fortnite", "Apex Legends", "Valorant", "Counter-Strike 2"]
-      .includes(g.title)
+  const freeGames = games.filter((g) =>
+    ["Minecraft", "Among Us", "Fortnite", "Apex Legends", "Valorant", "Counter-Strike 2"].includes(g.title)
   );
 
-  const fiveDollarGames = games.filter(g =>
-    ["Stardew Valley", "Undertale", "Terraria", "Cuphead"]
-      .includes(g.title)
+  const fiveDollarGames = games.filter((g) =>
+    ["Stardew Valley", "Undertale", "Terraria", "Cuphead"].includes(g.title)
   );
 
-  const fifteenDollarGames = games.filter(g =>
-    ["Hollow Knight", "Celeste", "Dead Cells", "Hades"]
-      .includes(g.title)
+  const fifteenDollarGames = games.filter((g) =>
+    ["Hollow Knight", "Celeste", "Dead Cells", "Hades"].includes(g.title)
   );
 
   return (
     <div id="website">
-
-      {/* HEADER */}
       <header id="topbar">
         <h1>
           <Link id="HomeT" to="/">Game Grouper</Link>
@@ -50,7 +49,6 @@ function Deals() {
         </nav>
       </header>
 
-      {/* SIDEBAR BUTTONS */}
       <button id="desktopArrow" onClick={() => setSidebarOpen(!sidebarOpen)}>
         {sidebarOpen ? "◄" : "►"}
       </button>
@@ -60,8 +58,6 @@ function Deals() {
       </button>
 
       <div id="pagelayout">
-
-        {/* SIDEBAR */}
         <aside
           id="sidebar"
           className={`${!sidebarOpen ? "closed" : ""} ${mobileOpen ? "show" : ""}`}
@@ -77,24 +73,24 @@ function Deals() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} alt="Gamepad" />
           </div>
         </aside>
 
-        {/* MAIN */}
         <main id="maincontent">
-
           <div id="login">
             <Link to="/login">Login</Link> | <Link to="/login">Signup</Link>
           </div>
 
-          {/* ===== FREE ===== */}
           <h2 className="dealCategory">FREE!</h2>
           <section className="dealsGrid">
-            {freeGames.map(game => (
+            {freeGames.map((game) => (
               <div className="dealBox" key={game.title}>
                 <a href={game.link} target="_blank" rel="noreferrer">
-                  <img src={`${process.env.PUBLIC_URL}/images/${game.image}`} />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/${game.image}`}
+                    alt={game.title}
+                  />
                 </a>
                 <h3>{game.title}</h3>
                 <p>FREE</p>
@@ -102,13 +98,15 @@ function Deals() {
             ))}
           </section>
 
-          {/* ===== $5 ===== */}
           <h2 className="dealCategory">$5 or Less</h2>
           <section className="dealsGrid">
-            {fiveDollarGames.map(game => (
+            {fiveDollarGames.map((game) => (
               <div className="dealBox" key={game.title}>
                 <a href={game.link} target="_blank" rel="noreferrer">
-                  <img src={`${process.env.PUBLIC_URL}/images/${game.image}`} />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/${game.image}`}
+                    alt={game.title}
+                  />
                 </a>
                 <h3>{game.title}</h3>
                 <p>$5 or Less</p>
@@ -116,24 +114,24 @@ function Deals() {
             ))}
           </section>
 
-          {/* ===== $15 ===== */}
           <h2 className="dealCategory">$15 or Less</h2>
           <section className="dealsGrid">
-            {fifteenDollarGames.map(game => (
+            {fifteenDollarGames.map((game) => (
               <div className="dealBox" key={game.title}>
                 <a href={game.link} target="_blank" rel="noreferrer">
-                  <img src={`${process.env.PUBLIC_URL}/images/${game.image}`} />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/${game.image}`}
+                    alt={game.title}
+                  />
                 </a>
                 <h3>{game.title}</h3>
                 <p>$15 or Less</p>
               </div>
             ))}
           </section>
-
         </main>
       </div>
 
-      {/* FOOTER */}
       <footer id="footer">
         <nav>
           <Link to="/">Home</Link>{" "}
@@ -144,7 +142,6 @@ function Deals() {
 
         <p>© 2026 Game Grouper</p>
       </footer>
-
     </div>
   );
 }

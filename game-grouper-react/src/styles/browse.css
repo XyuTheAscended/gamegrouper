@@ -30,7 +30,7 @@ body{
   font-size:18px;
 }
 
-/*Footer*/
+/* Footer */
 #footer{
   margin-top:40px;
   padding:20px;
@@ -40,18 +40,18 @@ body{
 }
 
 a{
-  text-decoration: none;
-  color: white;
+  text-decoration:none;
+  color:white;
 }
 
-/*website*/
+/* Website */
 #website{
   width:100%;
   min-height:100vh;
   padding:20px;
 }
 
-/*header*/
+/* Header */
 #topbar{
   width:100%;
   padding:25px 0 15px 0;
@@ -75,7 +75,7 @@ a{
   color:transparent;
 }
 
-/*navbar*/
+/* Navbar */
 #topnav{
   margin-top:15px;
 }
@@ -97,13 +97,13 @@ a{
   color:var(--yellow);
 }
 
-/*layout*/
+/* Layout */
 #pagelayout{
   display:flex;
   gap:20px;
 }
 
-/*sidebar*/
+/* Sidebar */
 #sidebar{
   width:300px;
   background:var(--panel2);
@@ -111,6 +111,8 @@ a{
   padding:25px;
   border:1px solid var(--border);
   transition:all 0.3s ease;
+  display:flex;
+  flex-direction:column;
 }
 
 #sidebar.closed{
@@ -149,14 +151,9 @@ a{
   color:var(--yellow);
 }
 
-/*sidebar gamepad image*/
-#sidebar{
-  display:flex;
-  flex-direction:column;
-}
-
+/* Sidebar gamepad image */
 .sidebar-gamepad{
-  margin-top:auto;          /* pushes it to bottom */
+  margin-top:auto;
   padding-top:30px;
   text-align:center;
 }
@@ -173,21 +170,22 @@ a{
   opacity:1;
 }
 
-/*main*/
+/* Main */
 #maincontent{
   flex:1;
   background:var(--panel);
   border-radius:20px;
   padding:25px;
   border:1px solid var(--border);
+  position:relative;
 }
 
-/*login buttons*/
+/* Login buttons */
 #login{
   display:flex;
   justify-content:flex-end;
   gap:12px;
-  margin-bottom:20px;
+  margin-bottom:16px;
 }
 
 #login a{
@@ -206,20 +204,7 @@ a{
   background:linear-gradient(180deg, #ff2d2d, #9b0c0c);
 }
 
-/*video*/
-#videopreview{
-  border-radius:20px;
-  overflow:hidden;
-  margin-bottom:20px;
-}
-
-#videopreview img{
-  width:100%;
-  height:400px;
-  object-fit:cover;
-}
-
-/*featured*/
+/* Featured */
 #featuredtitle{
   display:flex;
   justify-content:space-between;
@@ -245,7 +230,15 @@ a{
   background:rgba(255,255,255,0.05);
 }
 
-/*grids*/
+/* Browse title */
+#browseTitle{
+  font-size:34px;
+  font-weight:900;
+  margin-bottom:22px;
+  letter-spacing:1px;
+}
+
+/* Grids */
 #gameslayout,
 #genresGrid,
 #browseGrid,
@@ -257,7 +250,7 @@ a{
   gap:20px;
 }
 
-/*cards*/
+/* Cards */
 .gamebox,
 .genreBox,
 .browseBox,
@@ -282,7 +275,7 @@ a{
   border-radius:10px;
 }
 
-/*buttons*/
+/* Sidebar buttons */
 #desktopArrow{
   position:absolute;
   top:155px;
@@ -310,7 +303,178 @@ a{
   cursor:pointer;
 }
 
-/*auth page layout*/
+/*Suggestion box */
+.suggestionContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.suggestionPlusBtn {
+  margin-left: auto;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--orange), var(--yellow), var(--teal));
+  color: #08101f;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+  transition: all 0.2s ease;
+}
+
+.suggestionPlusBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(56,227,216,0.25);
+}
+
+.suggestionPlusBtn:active {
+  transform: scale(0.95);
+}
+
+.suggestionOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.72);
+  backdrop-filter:blur(3px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  z-index:99999;
+}
+
+/*Center popup*/
+.suggestionModal{
+  width:100%;
+  max-width:560px;
+  background:linear-gradient(180deg, rgba(12,16,35,0.98), rgba(8,12,25,0.98));
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:22px;
+  padding:28px 28px 24px 28px;
+  box-shadow:0 28px 70px rgba(0,0,0,0.65);
+  position:relative;
+}
+
+/* Header inside popup */
+.suggestionHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+
+.suggestionHeader h2{
+  font-size:36px;
+  line-height:1.1;
+  font-weight:900;
+  margin:0;
+  background: linear-gradient(90deg, var(--orange), var(--yellow), #6aff95, var(--teal));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.suggestionCloseBtn{
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  font-size:34px;
+  line-height:1;
+  cursor:pointer;
+  padding:0;
+  transition:color 0.2s ease, transform 0.2s ease;
+}
+
+.suggestionCloseBtn:hover{
+  color:white;
+  transform:scale(1.06);
+}
+
+/* Popup helper text */
+.suggestionSubtext{
+  color:var(--muted);
+  text-align:center;
+  font-size:15px;
+  line-height:1.5;
+  margin:0 0 18px 0;
+}
+
+/* Form */
+.suggestionForm{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.suggestionForm input,
+.suggestionForm textarea{
+  width:100%;
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:14px;
+  background:rgba(0,0,0,0.38);
+  color:white;
+  padding:14px 15px;
+  font-size:15px;
+  font-family:Arial, Helvetica, sans-serif;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.suggestionForm textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+.suggestionForm input::placeholder,
+.suggestionForm textarea::placeholder{
+  color:var(--muted);
+}
+
+.suggestionForm input:focus,
+.suggestionForm textarea:focus{
+  outline:none;
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(56,227,216,0.14);
+  background:rgba(0,0,0,0.52);
+}
+
+/* Submit button */
+.suggestionSubmitBtn{
+  margin-top:4px;
+  padding:14px 16px;
+  border:none;
+  border-radius:14px;
+  font-weight:900;
+  font-size:16px;
+  cursor:pointer;
+  color:#08101f;
+  background:linear-gradient(135deg, var(--orange), var(--yellow), var(--teal));
+  transition:transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.suggestionSubmitBtn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 28px rgba(255,213,74,0.18);
+  filter:brightness(1.03);
+}
+
+/* Status text */
+.suggestionStatus{
+  margin-top:14px;
+  text-align:center;
+  font-weight:800;
+  color:var(--yellow);
+  font-size:15px;
+}
+
+/* Optional auth styles kept */
 #authPage{
   width:100%;
   min-height:calc(100vh - 180px);
@@ -321,7 +485,6 @@ a{
   padding:40px;
 }
 
-/*auth columns*/
 .authColumn{
   width:400px;
   background:var(--panel);
@@ -331,7 +494,6 @@ a{
   box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
-/*auth titles*/
 .authColumn h2{
   font-size:32px;
   margin-bottom:25px;
@@ -343,7 +505,6 @@ a{
   color:transparent;
 }
 
-/*form*/
 .authForm{
   display:flex;
   flex-direction:column;
@@ -356,7 +517,6 @@ a{
   color:var(--muted);
 }
 
-/*inputs*/
 .authForm input{
   padding:12px;
   border-radius:12px;
@@ -371,7 +531,6 @@ a{
   border-color:var(--yellow);
 }
 
-/*buttons*/
 .authForm button{
   margin-top:10px;
   padding:12px;
@@ -388,13 +547,12 @@ a{
   transform:translateY(-2px);
 }
 
-/*divider*/
 #divider{
   width:2px;
   background:rgba(255,255,255,0.1);
 }
 
-/*mobile*/
+/* Mobile auth */
 @media (max-width:768px){
   #authPage{
     flex-direction:column;
@@ -411,7 +569,7 @@ a{
   }
 }
 
-/*mobile*/
+/* Mobile layout */
 @media (max-width:768px){
   #pagelayout{
     flex-direction:column;
@@ -442,5 +600,28 @@ a{
   .dealsGrid,
   .about-grid{
     grid-template-columns:1fr;
+  }
+
+  .suggestionContainer{
+    margin-bottom:18px;
+  }
+
+  .suggestionPlusBtn{
+    width:52px;
+    height:52px;
+    font-size:30px;
+  }
+
+  .suggestionModal{
+    padding:22px 18px 20px 18px;
+    border-radius:18px;
+  }
+
+  .suggestionHeader h2{
+    font-size:28px;
+  }
+
+  .suggestionSubtext{
+    font-size:14px;
   }
 }

@@ -6,23 +6,36 @@ import "../styles/browse.css";
 function Browse() {
   const [games, setGames] = useState([]);
   const [filteredGames, setFilteredGames] = useState([]);
-
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [status, setStatus] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    price: "",
+    tags: "",
+    image: ""
+  });
 
   const [searchParams] = useSearchParams();
   const tag = searchParams.get("tag") || "all";
 
-  // FETCH JSON
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + "/data/games.json")
-      .then(res => res.json())
-      .then(data => {
-        setGames(data.games);
-      });
+    fetch("http://localhost:3001/api/games")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch games");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setGames(data);
+      })
+      .catch((err) => console.error("FETCH ERROR:", err));
   }, []);
 
-  // FILTER WHEN TAG OR DATA CHANGES
   useEffect(() => {
     if (!games.length) return;
 
@@ -31,17 +44,90 @@ function Browse() {
       return;
     }
 
-    const filtered = games.filter(game =>
-      game.tags && game.tags.includes(tag)
+    const filtered = games.filter(
+      (game) => game.tags && game.tags.includes(tag)
     );
 
     setFilteredGames(filtered);
   }, [tag, games]);
 
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setStatus("");
+    setFormData({
+      title: "",
+      description: "",
+      price: "",
+      tags: "",
+      image: ""
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("");
+
+    const payload = {
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      price: formData.price.trim(),
+      tags: formData.tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag !== ""),
+      image: formData.image.trim()
+    };
+
+    if (
+      !payload.title ||
+      !payload.description ||
+      !payload.price ||
+      !payload.image ||
+      payload.tags.length === 0
+    ) {
+      setStatus("Please fill out all fields correctly.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:3001/api/suggestions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        setStatus(result.error || "Failed to send suggestion.");
+        return;
+      }
+
+      setStatus("Suggestion sent successfully!");
+
+      setFormData({
+        title: "",
+        description: "",
+        price: "",
+        tags: "",
+        image: ""
+      });
+    } catch (error) {
+      setStatus("Error sending suggestion.");
+    }
+  };
+
   return (
     <div id="website">
-
-      {/* HEADER */}
       <header id="topbar">
         <h1>
           <Link id="HomeT" to="/">Game Grouper</Link>
@@ -58,7 +144,6 @@ function Browse() {
         </nav>
       </header>
 
-      {/* SIDEBAR BUTTONS */}
       <button id="desktopArrow" onClick={() => setSidebarOpen(!sidebarOpen)}>
         {sidebarOpen ? "◄" : "►"}
       </button>
@@ -68,8 +153,6 @@ function Browse() {
       </button>
 
       <div id="pagelayout">
-
-        {/* SIDEBAR */}
         <aside
           id="sidebar"
           className={`${!sidebarOpen ? "closed" : ""} ${mobileOpen ? "show" : ""}`}
@@ -85,23 +168,23 @@ function Browse() {
           </ul>
 
           <div className="sidebar-gamepad">
-            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} />
+            <img src={`${process.env.PUBLIC_URL}/images/gamepad.png`} alt="Gamepad" />
           </div>
         </aside>
 
-        {/* MAIN */}
         <main id="maincontent">
-
           <div id="login">
             <Link to="/login">Login</Link> | <Link to="/login">Signup</Link>
           </div>
-
-          {/* TITLE */}
+          <div classname="suggestionContainer">
+        <button className="suggestionPlusBtn" onClick={() => setShowPopup(true)}>
+          +
+        </button>
+        </div>
           <h1 id="browseTitle">
             {tag === "all" ? "BROWSE GAMES" : tag.toUpperCase()}
           </h1>
 
-          {/* GRID */}
           <section id="browseGrid">
             {filteredGames.length ? (
               filteredGames.map((game, index) => (
@@ -111,11 +194,79 @@ function Browse() {
               <p>No games found.</p>
             )}
           </section>
-
         </main>
       </div>
 
-      {/* FOOTER */}
+      
+
+      {showPopup && (
+        <div className="suggestionOverlay" onClick={closePopup}>
+          <div
+            className="suggestionModal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="suggestionHeader">
+              <h2>Add Suggestion</h2>
+              <button className="suggestionCloseBtn" onClick={closePopup}>
+                ×
+              </button>
+            </div>
+
+            <form className="suggestionForm" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="title"
+                placeholder="Game Name"
+                value={formData.title}
+                onChange={handleChange}
+                required
+              />
+
+              <textarea
+                name="description"
+                placeholder="Description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+              />
+
+              <input
+                type="text"
+                name="price"
+                placeholder="Price"
+                value={formData.price}
+                onChange={handleChange}
+                required
+              />
+
+              <input
+                type="text"
+                name="tags"
+                placeholder="Tags (comma separated)"
+                value={formData.tags}
+                onChange={handleChange}
+                required
+              />
+
+              <input
+                type="text"
+                name="image"
+                placeholder="Image file name (example: hades.png)"
+                value={formData.image}
+                onChange={handleChange}
+                required
+              />
+
+              <button type="submit" className="suggestionSubmitBtn">
+                Send Suggestion
+              </button>
+            </form>
+
+            {status && <p className="suggestionStatus">{status}</p>}
+          </div>
+        </div>
+      )}
+
       <footer id="footer">
         <nav>
           <Link to="/">Home</Link>{" "}
@@ -126,7 +277,6 @@ function Browse() {
 
         <p>© 2026 Game Grouper</p>
       </footer>
-
     </div>
   );
 }

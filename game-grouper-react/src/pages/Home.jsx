@@ -11,20 +11,22 @@ function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + "/data/games.json")
-      .then((res) => res.json())
+    fetch("http://localhost:3001/api/games")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch games");
+        }
+        return res.json();
+      })
       .then((data) => {
-        const gamesData = data.games || [];
-        setAllGames(gamesData);
+        setAllGames(data);
 
         const featured = ["Among Us", "God of War", "Rogue Lineage"];
-
-        const firstGroup = gamesData.filter((game) =>
-          featured.includes(game.title)
-        );
+        const firstGroup = data.filter((game) => featured.includes(game.title));
 
         setGameGroups([firstGroup]);
-      });
+      })
+      .catch((err) => console.error("FETCH ERROR:", err));
   }, []);
 
   const getRandomGroup = () => {
@@ -53,8 +55,6 @@ function Home() {
 
   return (
     <div id="website">
-
-      {/* HEADER */}
       <header id="topbar">
         <h1>
           <Link id="HomeT" to="/">Game Grouper</Link>
@@ -71,7 +71,6 @@ function Home() {
         </nav>
       </header>
 
-      {/* SIDEBAR TOGGLES */}
       <button id="desktopArrow" onClick={() => setSidebarOpen(!sidebarOpen)}>
         {sidebarOpen ? "◄" : "►"}
       </button>
@@ -81,19 +80,17 @@ function Home() {
       </button>
 
       <div id="pagelayout">
-
-        {/* SIDEBAR */}
         <aside
           id="sidebar"
           className={`${!sidebarOpen ? "closed" : ""} ${mobileOpen ? "show" : ""}`}
         >
           <h2>POPULAR TAGS</h2>
           <ul>
-            <li><Link to="/browse">Horror games</Link></li>
-            <li><Link to="/browse">Multiplayer</Link></li>
-            <li><Link to="/browse">Visual novels</Link></li>
-            <li><Link to="/browse">Simulation</Link></li>
-            <li><Link to="/browse">Roguelike</Link></li>
+            <li><Link to="/browse?tag=horror">Horror games</Link></li>
+            <li><Link to="/browse?tag=multiplayer">Multiplayer</Link></li>
+            <li><Link to="/browse?tag=visual">Visual novels</Link></li>
+            <li><Link to="/browse?tag=simulation">Simulation</Link></li>
+            <li><Link to="/browse?tag=roguelike">Roguelike</Link></li>
             <li><Link to="/genres">Browse all tags →</Link></li>
           </ul>
 
@@ -102,15 +99,11 @@ function Home() {
           </div>
         </aside>
 
-        {/* MAIN */}
         <main id="maincontent">
-
-          {/* LOGIN */}
           <div id="login">
             <Link to="/login">Login</Link> | <Link to="/login">Signup</Link>
           </div>
 
-          {/* VIDEO */}
           <div id="videopreview">
             <iframe
               src="https://www.youtube.com/embed/E6MDYz9YVnY"
@@ -119,16 +112,12 @@ function Home() {
             ></iframe>
           </div>
 
-          {/* FEATURED TITLE */}
           <div id="featuredtitle">
             <h2>Latest Featured Games</h2>
             <Link id="viewAllBtn" to="/browse">View All &gt;&gt;&gt;</Link>
           </div>
 
-          {/* 🔥 3 GAME SLIDER */}
           <section id="gameslider">
-
-            {/* LEFT */}
             <button
               className="slider-arrow left"
               onClick={prevGroup}
@@ -137,7 +126,6 @@ function Home() {
               ◄
             </button>
 
-            {/* GAMES */}
             <div className="slider-games">
               {gameGroups[groupIndex] &&
                 gameGroups[groupIndex].map((game, index) => (
@@ -148,20 +136,13 @@ function Home() {
                 ))}
             </div>
 
-            {/* RIGHT */}
-            <button
-              className="slider-arrow right"
-              onClick={nextGroup}
-            >
+            <button className="slider-arrow right" onClick={nextGroup}>
               ►
             </button>
-
           </section>
-
         </main>
       </div>
 
-      {/* FOOTER */}
       <footer id="footer">
         <nav>
           <Link to="/">Home</Link>
@@ -171,7 +152,6 @@ function Home() {
         </nav>
         <p>© 2026 Game Grouper</p>
       </footer>
-
     </div>
   );
 }
