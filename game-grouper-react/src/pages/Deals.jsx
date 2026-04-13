@@ -8,7 +8,7 @@ function Deals() {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/games")
+    fetch("https://demo-backend-1-ln09.onrender.com/api/games")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch games");
