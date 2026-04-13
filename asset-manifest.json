@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/gamegrouper/static/css/main.791d3fb0.css",
-    "main.js": "/gamegrouper/static/js/main.48665e77.js",
+    "main.js": "/gamegrouper/static/js/main.15cb4f97.js",
     "index.html": "/gamegrouper/index.html",
     "main.791d3fb0.css.map": "/gamegrouper/static/css/main.791d3fb0.css.map",
-    "main.48665e77.js.map": "/gamegrouper/static/js/main.48665e77.js.map"
+    "main.15cb4f97.js.map": "/gamegrouper/static/js/main.15cb4f97.js.map"
   },
   "entrypoints": [
     "static/css/main.791d3fb0.css",
-    "static/js/main.48665e77.js"
+    "static/js/main.15cb4f97.js"
   ]
 }
