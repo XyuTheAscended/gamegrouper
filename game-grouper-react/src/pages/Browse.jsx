@@ -23,7 +23,7 @@ function Browse() {
   const tag = searchParams.get("tag") || "all";
 
   useEffect(() => {
-    fetch("https://demo-backend-1-ln09.onrender.com/api/games")
+    fetch("https://demo-backend-1-1m09.onrender.com/api/games")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch games");
@@ -97,7 +97,7 @@ function Browse() {
     }
 
     try {
-      const res = await fetch("https://demo-backend-1-ln09.onrender.com/api/suggestions", {
+      const res = await fetch("https://demo-backend-1-1m09.onrender.com/api/suggestions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

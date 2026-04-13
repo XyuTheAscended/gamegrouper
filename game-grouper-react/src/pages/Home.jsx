@@ -11,7 +11,7 @@ function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    fetch("https://demo-backend-1-ln09.onrender.com/api/games")
+    fetch("https://demo-backend-1-1m09.onrender.com/api/games")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch games");
