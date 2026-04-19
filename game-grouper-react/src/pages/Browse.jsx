@@ -140,6 +140,7 @@ function Browse() {
             <li><Link to="/deals">Deals</Link></li>
             <li><Link to="/browse">Browse Games</Link></li>
             <li><Link to="/devlogs">Developer Logs</Link></li>
+            <li><Link to="/suggestions">Suggestions</Link></li>
           </ul>
         </nav>
       </header>
@@ -176,11 +177,6 @@ function Browse() {
           <div id="login">
             <Link to="/login">Login</Link> | <Link to="/login">Signup</Link>
           </div>
-          <div classname="suggestionContainer">
-        <button className="suggestionPlusBtn" onClick={() => setShowPopup(true)}>
-          +
-        </button>
-        </div>
           <h1 id="browseTitle">
             {tag === "all" ? "BROWSE GAMES" : tag.toUpperCase()}
           </h1>

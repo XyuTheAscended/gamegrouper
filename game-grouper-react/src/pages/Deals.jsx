@@ -45,6 +45,7 @@ function Deals() {
             <li><Link to="/deals">Deals</Link></li>
             <li><Link to="/browse">Browse Games</Link></li>
             <li><Link to="/devlogs">Developer Logs</Link></li>
+            <li><Link to="/suggestions">Suggestions</Link></li>
           </ul>
         </nav>
       </header>

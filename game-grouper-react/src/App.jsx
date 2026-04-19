@@ -7,6 +7,7 @@ import Deals from "./pages/Deals";
 import Browse from "./pages/Browse";
 import Devlogs from "./pages/Devlogs";
 import LoginSignup from "./pages/LoginSignup";
+import Suggestions from "./pages/Suggestions";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/browse" element={<Browse />} />
         <Route path="/devlogs" element={<Devlogs />} />
         <Route path="/login" element={<LoginSignup />} />
+        <Route path="/suggestions" element={<Suggestions />} />
       </Routes>
     </HashRouter>
   );

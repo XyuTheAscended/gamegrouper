@@ -1,0 +1,62 @@
+@import "./browse.css";
+
+/* ===== SUGGESTION POPUP IMAGE ===== */
+.suggestionImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+/* ===== ACTION BUTTONS (MATCH SITE STYLE) ===== */
+.suggestionActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+/* base button */
+.suggestionActions button {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* EDIT button (blue like login) */
+.editBtn {
+  background: linear-gradient(180deg, var(--blueBtn), #103ab0);
+  color: white;
+}
+
+.editBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(30,107,255,0.3);
+}
+
+/* SAVE button (teal theme) */
+.saveBtn {
+  background: linear-gradient(135deg, var(--teal), #6aff95);
+  color: #08101f;
+}
+
+.saveBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(56,227,216,0.3);
+}
+
+/* DELETE button (red like your theme) */
+.deleteBtn {
+  background: linear-gradient(180deg, var(--redBtn), #8b0f0f);
+  color: white;
+}
+
+.deleteBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(211,22,22,0.3);
+}
