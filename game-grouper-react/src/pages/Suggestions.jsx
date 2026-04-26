@@ -91,6 +91,11 @@ function Suggestions() {
   const handleDelete = async (e, id) => {
     e.stopPropagation();
 
+    if (!id) {
+      alert("Missing ID");
+      return;
+    }
+
     try {
       const res = await fetch(
         `https://demo-backend-1-1m09.onrender.com/api/suggestions/${id}`,
@@ -99,7 +104,10 @@ function Suggestions() {
 
       if (!res.ok) throw new Error();
 
-      setSuggestions((prev) => prev.filter((s) => s.id !== id));
+      setSuggestions((prev) =>
+        prev.filter((s) => s._id !== id)
+      );
+
       closePopup();
     } catch {
       alert("Delete failed");
@@ -109,6 +117,11 @@ function Suggestions() {
   const handleEdit = async (e) => {
     e.stopPropagation();
 
+    if (!selected?._id) {
+      alert("Missing ID");
+      return;
+    }
+
     if (selected.title.length < 3) {
       alert("Title must be at least 3 characters");
       return;
@@ -116,7 +129,7 @@ function Suggestions() {
 
     try {
       const res = await fetch(
-        `https://demo-backend-1-1m09.onrender.com/api/suggestions/${selected.id}`,
+        `https://demo-backend-1-1m09.onrender.com/api/suggestions/${selected._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -132,7 +145,7 @@ function Suggestions() {
       if (!res.ok) throw new Error();
 
       setSuggestions((prev) =>
-        prev.map((s) => (s.id === selected.id ? data : s))
+        prev.map((s) => (s._id === selected._id ? data : s))
       );
 
       setSelected(data);
@@ -204,7 +217,7 @@ function Suggestions() {
 
           <section id="browseGrid">
             {suggestions.map((game) => (
-              <div key={game.id} onClick={() => setSelected(game)}>
+              <div key={game._id} onClick={() => setSelected(game)}>
                 <BrowseCard game={game} />
               </div>
             ))}
@@ -212,7 +225,6 @@ function Suggestions() {
         </main>
       </div>
 
-      {/* ADD POPUP */}
       {showPopup && (
         <div className="suggestionOverlay" onClick={closePopup}>
           <div className="suggestionModal" onClick={(e) => e.stopPropagation()}>
@@ -258,7 +270,6 @@ function Suggestions() {
         </div>
       )}
 
-      {/* VIEW / EDIT POPUP */}
       {selected && (
         <div className="suggestionOverlay" onClick={closePopup}>
           <div className="suggestionModal" onClick={(e) => e.stopPropagation()}>
@@ -310,7 +321,7 @@ function Suggestions() {
 
               <button
                 className="deleteBtn"
-                onClick={(e) => handleDelete(e, selected.id)}
+                onClick={(e) => handleDelete(e, selected._id)}
               >
                 Delete
               </button>
